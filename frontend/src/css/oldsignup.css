@@ -1,0 +1,446 @@
+/* Base Styles */
+.signup-frst-page {
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif; /* Use Inter or a similar sans-serif */
+  color: #ffffff;
+}
+
+.signup-frst-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  padding: 40px;
+}
+
+.signup-frst-page-content {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Left Content Section */
+.left-signup-content {
+  flex: 1;
+}
+
+.left-signup-content .white-h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.left-signup-content .green-h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #00ff9d; /* Bright neon green */
+  margin: 0 0 24px 0;
+  line-height: 1.1;
+  font-style: italic;
+}
+
+.signup-p-1 {
+  font-size: 1rem;
+  color: #a0a0a0;
+  line-height: 1.6;
+  max-width: 440px;
+  margin-bottom: 40px;
+}
+
+.left-signup-content img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+}
+
+/* Right Content Section (The Form) */
+.right-signup-content {
+  flex: 1;
+  position: relative;
+  padding-left: 80px;
+  border-left: 1px solid #1a1a1a; /* The vertical divider line */
+}
+
+.signup-email-h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.signup-email-p {
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.right-signup-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Gap between labels and inputs */
+}
+
+.right-signup-content label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 16px;
+}
+
+.right-signup-content input {
+  background-color: #151515;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.right-signup-content input::placeholder {
+  color: #444;
+}
+
+.right-signup-content input:focus {
+  border-color: #00ff9d;
+}
+
+/* Glowing Submit Button */
+.right-signup-content button {
+  background: #00ff9d;
+  color: #000;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 32px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.right-signup-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+}
+
+/* Footer Links */
+.signup-email-p2 {
+  text-align: center;
+  margin-top: 24px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.sign-in-shortcut {
+  color: #00ff9d;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .signup-frst-page-content {
+    flex-direction: column;
+    gap: 60px;
+  }
+  .right-signup-content {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+/* Container & Background */
+.signup-second-page {
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+.signup-second-wrapper {
+  max-width: 900px;
+  width: 100%;
+}
+
+.signup-name-h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.signup-name-p {
+  color: #888;
+  margin-bottom: 40px;
+  font-size: 0.95rem;
+}
+
+/* Layout */
+form {
+  display: flex;
+  gap: 40px;
+}
+
+/* Profile Image Uploader */
+.profile-image-uploader {
+  flex-shrink: 0;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  cursor: pointer;
+  overflow: visible; /* To allow the edit icon to sit on the edge */
+}
+
+.avatar-preview {
+  width: 100%;
+  height: 100%;
+ 
+  object-fit: cover;
+}
+
+
+
+/* Form Content */
+.signup-name-right-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.signup-name-row-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.label-input-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label-input-col label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Inputs & Textareas */
+input[type="text"], 
+textarea {
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #00ffa3;
+  background: #1a1a1a;
+}
+
+textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+/* Skills Chips Styling */
+.label-input-col > label:not(:first-child) {
+  display: inline-flex;
+  align-items: center;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+/* Hide the actual checkbox */
+.label-input-col input[type="checkbox"] {
+  display: none;
+}
+
+/* When checkbox is checked, style the parent label */
+.label-input-col label:has(input[type="checkbox"]:checked) {
+  background: #00ffa3;
+  color: #000;
+  border-color: #00ffa3;
+}
+
+/* Custom Skill Input & Add Button */
+.label-input-col div {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.label-input-col div input {
+  flex-grow: 1;
+  padding: 8px 15px;
+}
+
+.label-input-col div button {
+  background: transparent;
+  border: 1px dashed #444;
+  color: #888;
+  padding: 0 15px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Submit Section */
+.create-profile-btn {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.create-profile-btn button[type="submit"] {
+  width: 100%;
+  background: #00ffa3;
+  color: #000;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 255, 163, 0.2);
+  transition: transform 0.2s;
+}
+
+.create-profile-btn button:hover {
+    transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+}
+
+
+
+.create-profile-p-1 {
+  margin-top: 20px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.green-txt {
+  color: #00ffa3;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+    align-items: center;
+  }
+  .signup-name-row-input {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Responsive adjustments for tablets and mobile */
+@media (max-width: 768px) {
+  .signup-frst-wrapper,
+  .signup-second-wrapper {
+    padding: 20px; /* consistent screen padding */
+  }
+
+  .signup-frst-page-content {
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+  }
+
+  .right-signup-content {
+    border-left: none;
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .right-signup-content form,
+  .signup-name-right-content {
+    width: 100%;
+  }
+
+  .right-signup-content input,
+  .right-signup-content button,
+  .signup-name-row-input input,
+  .signup-name-row-input textarea,
+  .create-profile-btn button[type="submit"] {
+    width: 100%; /* stretch to full width */
+    box-sizing: border-box; /* respect padding */
+  }
+
+  .signup-name-row-input {
+    grid-template-columns: 1fr; /* single column */
+    gap: 15px;
+  }
+}
+
+/* Mobile / Android breakpoint (≤480px) */
+@media (max-width: 480px) {
+  .signup-frst-wrapper,
+  .signup-second-wrapper {
+    padding: 20px; /* enforce 20px screen padding */
+  }
+
+  .left-signup-content .white-h2,
+  .left-signup-content .green-h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .signup-p-1 {
+    font-size: 0.9rem;
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+
+  .right-signup-content input,
+  .right-signup-content button,
+  .signup-name-row-input input,
+  .signup-name-row-input textarea,
+  .create-profile-btn button[type="submit"] {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 12px 14px;
+  }
+
+  .signup-email-h3,
+  .signup-name-h3 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .signup-email-p,
+  .signup-name-p {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+}

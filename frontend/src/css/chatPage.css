@@ -1,0 +1,518 @@
+/* --- COLORS & VARIABLES --- */
+:root {
+  --bg-dark: #0b1414;
+  --panel-bg: #0d1616;
+  --accent-green: #00ffa3;
+  --received-bubble: #1a2424;
+  --text-main: #ffffff;
+  --text-muted: #94a3a8;
+  --border-color: #1e2b2b;
+  --input-bg: #121d1d;
+}
+
+/* --- LAYOUT --- */
+.chatPage-page {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  
+  
+}
+
+.chatPage-wrapper {
+  display: flex;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- 1. CHAT LIST PANEL --- */
+.chatPage-list {
+  width: 100%; /* Default for Mobile */
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.list-header {
+  padding: 24px 20px;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-row h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.icon-main {
+  color: var(--accent-green);
+  font-size: 24px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg);
+  padding: 1px 15px;
+  border-radius: 8px;
+  gap: 10px;
+  width: 90%;
+}
+
+.search-bar input {
+  flex: 1;              /* <-- makes input expand */
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  font-size: 14px;      /* optional: improves readability */
+}
+
+.search-bar svg {
+  color: var(--text-muted); /* style the icon separately */
+  font-size: 18px;
+}
+
+
+.list-container {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */ 
+  -ms-overflow-style: none;
+}
+
+
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-list-item:hover, .chat-list-item.active {
+  background: rgba(0, 255, 163, 0.05);
+}
+
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  background: #333;
+}
+
+.chat-item-info .chat-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.chat-item-info .chat-last-msg {
+  color: var(--text-muted);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+}
+
+/* --- 2. MESSAGES PANEL --- */
+.chatPage-window {
+  flex: 1;
+  height: 100%;
+  background: var(--bg-dark);
+  position: relative;
+}
+
+.chat-window-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-window-header {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+   
+}
+
+.chat-avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.complete-btn {
+  background: transparent;
+  border: 1px solid #14463a;
+  color: var(--accent-green);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.call-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  margin-left: 15px;
+  cursor: pointer;
+  
+}
+
+/* --- MESSAGES AREA --- */
+.chat-messages-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  scrollbar-width: none; /* Hide scrollbar in IE/Edge */ 
+  -ms-overflow-style: none;
+}
+
+.chat-messages-scroll::-webkit-scrollbar { display: none; /* Chrome, Safari, Opera */ }
+
+.convo-divider {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin: 20px 0;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 5px 12px;
+  border-radius: 4px;
+  align-self: center;
+}
+
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  max-width: 80%;
+  gap: 10px;
+}
+
+.message-row.sent {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.message-bubble {
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.message-row.received .message-bubble {
+  background: var(--received-bubble);
+}
+
+.message-row.sent .message-bubble {
+  background: var(--accent-green);
+  color: #000;
+  font-weight: 500;
+}
+
+/* --- INPUT AREA --- */
+.chat-input-container {
+  padding: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input-container input {
+  flex: 1;
+  background: var(--input-bg);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  color: white;
+  outline: none;
+}
+
+.send-btn {
+  background: var(--accent-green);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000;
+}
+
+/* --- PC STYLE OVERRIDES --- */
+@media (min-width: 768px) {
+  .chatPage-list {
+    width: 350px;
+  }
+}
+
+/* --- MOBILE BACK BUTTON --- */
+.back-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.chat-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+}
+
+.chat-empty-state svg {
+  font-size: 60px;
+  margin-bottom: 15px;
+  opacity: 0.1;
+}
+
+/* --- ANDROID / MOBILE FONT SIZE OVERRIDES --- */
+@media (max-width: 767px) {
+  .title-row h2 {
+    font-size: 20px;   /* smaller heading for mobile */
+  }
+
+  
+
+  .search-bar input {
+    font-size: 12px;   /* tighter input text */
+  }
+
+  .chat-item-info .chat-name {
+    font-size: 14px;   /* adjust contact name size */
+  }
+
+  .chat-item-info .chat-last-msg {
+    font-size: 12px;   /* adjust preview text size */
+  }
+
+  .chat-item-info .chat-last-msg {
+  
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+}
+  .message-bubble {
+    font-size: 14px;   /* slightly smaller message text */
+  }
+
+  .convo-divider {
+    font-size: 9px;    /* divider text smaller */
+  }
+
+  .complete-btn {
+    font-size: 12px;   /* button text smaller */
+  }
+
+  .call-btn {
+    font-size: 18px;   /* icon slightly smaller */
+  }
+
+  .chat-input-container input {
+    font-size: 13px;   /* input text smaller */
+  }
+
+  .chat-messages-scroll {
+  
+  padding: 0 10px;
+ 
+}
+  .chaterName{
+    font-size: 15px;
+   white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+  
+.trade-proposal-card {
+    background: #141d1d;
+    border: 1px solid #1e2b2b;
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 280px;
+}
+
+.trade-proposal-card h4 {
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    color: white;
+}
+
+.trade-proposal-card p {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.trade-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.accept-btn {
+    background: var(--accent-green);
+    color: black;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    padding: 8px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.status-note {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--accent-green);
+}
+
+.final-status {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-top: 5px;
+}
+
+.final-status.accepted { color: var(--accent-green); }
+.final-status.rejected { color: #ff4d4d; }
+}
+
+
+.trade-proposal-card {
+    background: #141d1d;
+    border: 1px solid #1e2b2b;
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 280px;
+}
+
+.trade-proposal-card h4 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    color: white;
+}
+
+.trade-proposal-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.trade-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.accept-btn {
+    background: var(--accent-green);
+    color: black;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    padding: 8px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.status-note {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--accent-green);
+}
+
+.final-status {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-top: 5px;
+}
+
+.final-status.accepted { color: var(--accent-green); }
+.final-status.rejected { color: #ff4d4d; }
+
+.give-feedback-btn {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.give-feedback-btn:hover {
+  background-color: #0056b3;
+}
+
+.status-badge-accepted {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.highlight {
+  background-color: rgba(0, 255, 163, 0.1);
+  border: 1px solid var(--accent-green);  
+}

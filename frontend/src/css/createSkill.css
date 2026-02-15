@@ -1,0 +1,391 @@
+/* Color Palette & Variables */
+:root {
+  --bg-color: #0a0a0a;
+  --card-bg: #121a19;
+  --text-main: #ffffff;
+  --text-muted: #8e9594;
+  --neon-primary: #00ffa3;
+  --neon-hover: #00e692;
+  --pill-bg: #1a2321;
+  --pill-border: #2a3533;
+  --badge-available: #004d3d;
+  --badge-interests: #2d3748;
+}
+
+.createskill-page {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  margin-top: 5rem;
+}
+
+.createskill-wrapper {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* Header & Navigation */
+.createskill-header {
+  margin-bottom: 48px;
+}
+
+.back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.back-btn:hover { color: var(--text-main); }
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* Form Sections */
+.createskill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Inputs & Textarea */
+.main-input, .main-textarea {
+  background-color: var(--card-bg);
+  border: 1px solid var(--pill-border);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main-input:focus, .main-textarea:focus {
+  border-color: var(--neon-primary);
+}
+
+.main-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Pill Grid Layout */
+.pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill-item {
+  padding: 10px 20px;
+  background-color: var(--pill-bg);
+  border: 1.5px solid transparent;
+  border-radius: 100px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+}
+
+.pill-item:hover {
+  background-color: var(--pill-border);
+  color: var(--text-main);
+}
+
+/* Active & Outline States */
+.pill-item.active {
+  background-color: var(--neon-primary);
+  color: #000;
+  font-weight: 600;
+}
+
+.pill-item.outline {
+  background-color: transparent;
+  border-color: var(--pill-border);
+}
+
+.pill-item.selected {
+  border-color: var(--neon-primary);
+  color: var(--neon-primary);
+  background: rgba(0, 255, 163, 0.05);
+}
+
+/* Badges */
+.badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.badge.available {
+  background-color: var(--badge-available);
+  color: var(--neon-primary);
+}
+
+.badge.interests {
+  background-color: var(--badge-interests);
+  color: #a0aec0;
+}
+
+/* Action Buttons */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.submit-btn {
+  background-color: var(--neon-primary);
+  color: #000;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--neon-hover);
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover { color: var(--text-main); }
+
+/* Responsive Adjustments */
+
+/* Large tablet / small laptop (≤1100px) */
+@media (max-width: 1100px) {
+  .page-title {
+    font-size: 28px;
+  }
+  .page-subtitle {
+    font-size: 15px;
+  }
+}
+
+/* Tablet breakpoint (≤768px) */
+@media (max-width: 768px) {
+  .createskill-page {
+    padding: 30px 15px;
+    margin-top: 5rem;
+  }
+
+  .page-title {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .submit-btn, .cancel-btn {
+    width: 100%; /* full width buttons */
+    text-align: center;
+  }
+}
+
+/* Mobile / Android breakpoint (≤480px) */
+@media (max-width: 480px) {
+  .createskill-page {
+    padding: 20px 10px;
+   margin-top: 4rem;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+  }
+
+  .main-input, .main-textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .pill-item {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .form-actions {
+    gap: 12px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .cancel-btn {
+    font-size: 14px;
+  }
+}
+
+
+.createskill-page {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 40px 20px; /* consistent screen padding */
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.createskill-wrapper {
+  width: 920px;              /* take full width */
+  max-width: 100%;          /* remove hard cap */
+  margin: 0 auto;
+}
+
+.createskill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;              /* stretch form */
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;              /* ensure section fills width */
+}
+
+.main-input,
+.main-textarea {
+  background-color: var(--card-bg);
+  border: 1px solid var(--pill-border);
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;              /* full width inputs */
+  box-sizing: border-box;   /* respect padding */
+}
+
+.main-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Action Buttons */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.submit-btn,
+.cancel-btn {
+  flex: 1;                  /* buttons share row evenly */
+  min-width: 140px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .createskill-page {
+    padding: 30px 22px;      /* keep 20px padding */
+  }
+
+  .createskill-wrapper {
+  width: 100%;             /* take full width */
+  max-width: 100%;          /* remove hard cap */
+  margin: 0 auto;
+}
+
+  .form-actions {
+    flex-direction: column;  /* stack buttons */
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    width: 100%;             /* full width buttons */
+  }
+}
+
+@media (max-width: 480px) {
+  .createskill-page {
+    padding: 20px 23px;        /* tighter padding */
+  }
+
+  .main-input,
+  .main-textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .cancel-btn {
+    font-size: 14px;
+  }
+}

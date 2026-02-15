@@ -1,0 +1,346 @@
+:root {
+  --bg-dark: #0a0a0a;
+  --card-bg: #121b16;
+  --accent-green: #00ffa3;
+  --accent-red: #ff5f5f;
+  --text-white: #ffffff;
+  --text-gray: #9ca3af;
+  --input-bg: #15201a;
+}
+
+/* Base Layout */
+.homepage {
+  background-color: var(--bg-dark);
+  min-height: 100vh;
+  color: var(--text-white);
+  padding: 40px 20px;
+  padding-top: 5rem;
+}
+
+.homepage-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* 1. Hero Section */
+.home-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.hero-subtitle {
+  color: var(--text-gray);
+  font-size: 1rem;
+}
+
+/* 2. Search Section */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.search-bar {
+  background: var(--input-bg);
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-icon {
+  color: var(--text-gray);
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.search-bar input::placeholder {
+  color: #4b5563;
+}
+
+/* 3. Category Tabs (Swipeable Row) */
+.home-category-container {
+  margin-bottom: 50px;
+  overflow-x: auto;              /* enable horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+
+.home-category-list {
+  display: flex;
+    justify-content: flex-start;
+  
+  gap: 15px;
+  flex-wrap: nowrap;             /* keep items in one row */
+  padding: 0 10px;
+}
+
+.category-item {
+  flex: 0 0 auto;                /* prevent shrinking */
+  padding: 10px 24px;
+  border-radius: 30px;
+  background: var(--input-bg);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  color: var(--text-gray);
+  border: 1px solid transparent;
+  white-space: nowrap;           /* prevent text wrapping */
+}
+
+.category-item:hover {
+  background: #1f2e26;
+}
+
+.category-item.active {
+  background: var(--accent-green);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Hide scrollbar for cleaner look */
+.home-category-container::-webkit-scrollbar {
+  display: none;
+}
+.home-category-container {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* 4. Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.skill-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image-wrapper {
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.skill-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-details {
+  padding: 20px;
+}
+
+.owner-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.location-text {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.pin-icon {
+  font-size: 0.9rem;
+}
+
+.info-group {
+  margin-bottom: 15px;
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.offering-label {
+  color: var(--accent-green);
+}
+
+.looking-label {
+  color: var(--accent-red);
+}
+
+.value {
+  font-size: 0.95rem;
+  color: #e5e7eb;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  color: var(--text-gray);
+}
+
+/* Responsive Adjustments */
+
+/* Large tablet / small laptop (≤1100px) */
+@media (max-width: 1100px) {
+  .homepage {
+    padding: 30px 25px;
+      padding-top: 5rem;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Tablet breakpoint (≤768px) */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 25px 25px;
+      padding-top: 5rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .search-bar {
+    max-width: 100%;
+    padding: 10px 15px;
+  }
+
+  .category-item {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr; /* two cards per row */
+    gap: 18px;
+  }
+
+  .card-image-wrapper {
+    height: 160px;
+  }
+
+  .card-details {
+    padding: 16px;
+  }
+
+  .owner-name {
+    font-size: 1rem;
+  }
+
+  .value {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile / Android breakpoint (≤480px) */
+@media (max-width: 480px) {
+  .homepage {
+    padding: 20px 23px;
+      padding-top: 5rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .search-container {
+    margin-bottom: 30px;
+  }
+
+  .search-bar {
+    padding: 8px 12px;
+    border-radius: 10px;
+  }
+
+  .search-icon {
+    font-size: 1rem;
+    margin-right: 8px;
+  }
+
+  .home-category-list {
+ 
+  justify-content: flex-start;
+ 
+}
+  .category-item {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr; /* single column */
+    gap: 15px;
+  }
+
+  .card-image-wrapper {
+    height: 140px;
+  }
+
+  .card-details {
+    padding: 14px;
+  }
+
+  .owner-name {
+    font-size: 0.95rem;
+  }
+
+  .location-text {
+    font-size: 0.8rem;
+  }
+
+  .value {
+    font-size: 0.85rem;
+  }
+
+  .no-results {
+    padding: 30px;
+    font-size: 0.9rem;
+  }
+}

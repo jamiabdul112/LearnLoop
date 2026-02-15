@@ -19,3 +19,11 @@ yarn-error.log*
 # System Files
 .DS_Store
 Thumbs.db
+
+# ... existing entries (node_modules, .env, etc.)
+
+# Temp/Notes files
+prompt.txt
+prompt2
+tradecompletebtn.txt
+userinfo.txt
