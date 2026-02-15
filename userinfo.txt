@@ -1,0 +1,22 @@
+{
+  "name": "Jami",
+  "email": "jami@example.com",
+  "password": "StrongPass123",
+  
+  "address": "Virudhachalam, Tamil Nadu",
+  "about": "Frontend developer and designer",
+  "skillsOffered": ["React", "UI/UX Design"],
+  "skillsWanted": ["Backend Development", "Music"]
+}
+
+
+{
+  "name": "Jami 2",
+  "email": "jami2@example.com",
+  "password": "StrongPass123",
+  
+  "address": "Virudhachalam, Tamil Nadu",
+  "about": "Frontend developer and designer",
+  "skillsOffered": ["React", "UI/UX Design"],
+  "skillsWanted": ["Backend Development", "Music"]
+}

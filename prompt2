@@ -1,0 +1,441 @@
+ok now lets move to the trade complete button , when i click that button , it should send a message by that user who clicked it and the other side user recieve that text as in reciver chattext style, shows that chat with "Trade Completion Request""{user name} has proposed to finalize this exchange""accept or reject (2 button)"just like the image and the one who sent that request have a text like "request sent waiting for their approval" if they approved the message he will recive is the propsal is accepted and if he rejected he proposal is rejected message and here is the backennd code import React, { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { io } from "socket.io-client";
+import { baseURL } from "../constants/baseUrl";
+import { defaultImg } from "../constants/defaultImg";
+import { IoSend } from "react-icons/io5";
+import "../css/chatPage.css";
+import { useRef } from "react";
+import { IoChatbubbles } from "react-icons/io5";
+import { IoIosSearch } from "react-icons/io";
+import { IoMdCall } from "react-icons/io";
+import { IoCallSharp } from "react-icons/io5";
+
+// Change the socket init to include transport options if you face issues
+const socket = io(baseURL, { 
+  withCredentials: true,
+  transports: ['websocket', 'polling'] 
+});
+
+function ChatPage() {
+    
+  const queryClient = useQueryClient();
+  const authUser = queryClient.getQueryData(["authUser"]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [messageText, setMessageText] = useState("");
+  const [liveMessages, setLiveMessages] = useState([]);
+
+  // ✅ Fetch all chats for logged-in user
+  const { data: chats, isLoading: loadingChats } = useQuery({
+    queryKey: ["userChats"],
+    queryFn: async () => {
+      const res = await fetch(`${baseURL}/api/chats`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || data.message || "Failed to fetch chats");
+      return data;
+    },
+  });
+
+  // ✅ Fetch messages for selected chat (initial load)
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!selectedChat) return;
+      const res = await fetch(`${baseURL}/api/chats/${selectedChat._id}/messages`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setLiveMessages(data);
+      }
+    };
+    fetchMessages();
+  }, [selectedChat]);
+
+  // ✅ Socket.IO setup
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to socket:", socket.id);
+    });
+
+    socket.on("newMessage", (message) => {
+      setLiveMessages((prev) => [...prev, message]);
+    });
+
+    return () => {
+      socket.off("newMessage");
+    };
+  }, []);
+
+  // ✅ Join chat room when selecting a chat
+  useEffect(() => {
+    if (selectedChat?._id) {
+      socket.emit("joinChat", selectedChat._id);
+    }
+  }, [selectedChat]);
+
+  // ✅ Send message via socket
+  const handleSendMessage = () => {
+    if (messageText.trim() && selectedChat?._id) {
+      socket.emit("sendMessage", {
+        chatId: selectedChat._id,
+        senderId: authUser._id,
+        text: messageText,
+      });
+      setMessageText("");
+    }
+  };
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    // Scroll whenever messages change
+    useEffect(() => {
+    scrollToBottom();
+    }, [liveMessages]);
+
+
+  if (loadingChats) return <p>Loading chats...</p>;
+
+  return (
+    <div className="chatPage-page">
+        <div className="chatPage-wrapper">
+
+            {/* 1. CHAT LIST PANEL */}
+            {/* Logic: On mobile, hide list if a chat is selected. On PC, always show. */}
+            {(!isMobile || !selectedChat) && (
+            <div className="chatPage-list">
+                <div className="list-header">
+                <div className="title-row">
+                    <h2>Chats</h2>
+                    <IoChatbubbles className="icon-main" />
+                </div>
+                <div className="search-bar">
+                    <IoIosSearch />
+                    <input 
+                    type="text" 
+                    placeholder="Search users..." 
+                    className="chat-search" 
+                    />
+                </div>
+                </div>
+
+                <div className="list-container">
+                {chats?.length > 0 ? (
+                    chats.map((chat) => {
+                    const otherUser = chat.participants.find((p) => p._id !== authUser?._id);
+                    const lastMessage = chat.messages?.[chat.messages.length - 1];
+                    return (
+                        <div
+                        key={chat._id}
+                        className={`chat-list-item ${selectedChat?._id === chat._id ? "active" : ""}`}
+                        onClick={() => setSelectedChat(chat)}
+                        >
+                        <img
+                            src={otherUser?.profileImg || defaultImg}
+                            alt="profile"
+                            className="chat-avatar"
+                        />
+                        <div className="chat-item-info">
+                            <p className="chat-name">{otherUser?.name}</p>
+                            <p className="chat-last-msg">
+                            {lastMessage ? lastMessage.text : "No messages yet"}
+                            </p>
+                        </div>
+                        </div>
+                    );
+                    })
+                ) : (
+                    <p className="no-data">No chats yet.</p>
+                )}
+                </div>
+            </div>
+            )}
+
+            {/* 2. MESSAGES PANEL */}
+            {/* Logic: On mobile, only show if a chat is selected. On PC, show placeholder if none. */}
+            {(!isMobile || selectedChat) && (
+            <div className="chatPage-window">
+                {selectedChat ? (
+                <div className="chat-window-content">
+                    <div className="chat-window-header" >
+                    {/* Back Button for Mobile Navigation */}
+                    
+                    
+                    <div className="header-user-info">
+                         {isMobile && (
+                        <button className="back-btn" style={{margin:"0", padding:"0 3px", marginBottom:"0.4rem", fontSize:"16px"}} onClick={() => setSelectedChat(null)}>
+                        ←
+                        </button>
+                    )}
+                        <img
+                        src={selectedChat.participants.find((p) => p._id !== authUser?._id)?.profileImg || defaultImg}
+                        alt="profile"
+                        className="chat-avatar-small"
+                        />
+                        <h3 className="chaterName">{selectedChat.participants.find((p) => p._id !== authUser?._id)?.name}</h3>
+                    </div>
+
+                    <div className="header-actions">
+                        <button className="complete-btn">Complete Trade</button>
+                        <IoCallSharp style={{marginBottom:"-0.35rem"}} className="call-btn"/>
+                    </div>
+                    </div>
+
+                    <div className="chat-messages-scroll">
+                    {liveMessages?.length > 0 ? (
+                        <>
+                        <p className="convo-divider">CONVERSATION STARTED</p>
+                        {liveMessages.map((msg, idx) => {
+                            const isSentByMe = msg.sender?._id === authUser?._id || msg.sender === authUser?._id;
+                            return (
+                            <div key={idx} className={`message-row ${isSentByMe ? "sent" : "received"}`}>
+                                <img
+                                src={msg.sender?.profileImg || defaultImg}
+                                className="msg-avatar"
+                                alt=""
+                                />
+                                <div className="message-bubble">
+                                {msg.text}
+                                </div>
+                            </div>
+                            );
+                        })}
+                        <div ref={messagesEndRef} />
+                        </>
+                    ) : (
+                        <p className="convo-divider">No messages yet</p>
+                    )}
+                    </div>
+
+                    <div className="chat-input-container">
+                    <input
+                        type="text"
+                        placeholder="Type a message..."
+                        value={messageText}
+                        onChange={(e) => setMessageText(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+                    />
+                    <button className="send-btn" onClick={handleSendMessage} disabled={!messageText.trim()}>
+                        <IoSend />
+                    </button>
+                    </div>
+                </div>
+                ) : (
+                /* Desktop Empty State */
+                <div className="chat-empty-state">
+                    <IoChatbubbles />
+                    <p>Select a chat to start messaging</p>
+                </div>
+                )}
+            </div>
+            )}
+            
+        </div>
+        </div>
+  );
+}
+
+export default ChatPage; export const markTradeComplete = async (req, res) => {
+  try {
+    const trade = await TradeRequest.findById(req.params.id);
+
+    if (!trade) return res.status(404).json({ message: "Trade request not found" });
+
+    if (trade.status !== "accepted") {
+      return res.status(400).json({ message: "Trade must be accepted before completion" });
+    }
+
+    trade.status = "completed";
+    await trade.save();
+
+    res.json({ message: "Trade marked as completed", trade });
+  } catch (error) {
+    console.error("markTradeComplete error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+import mongoose from "mongoose";
+
+const tradeRequestSchema = new mongoose.Schema(
+  {
+    fromUser: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User", 
+        required: true 
+    },
+    toUser: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User", 
+        required: true 
+    },
+    skillOffered: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Skill", 
+        required: true 
+    },
+    skillWanted: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Skill", 
+        required: true 
+    },
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "rejected", "completed"],
+      default: "pending",
+    },
+    chatId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Chat" 
+    }, // optional
+  },
+  { timestamps: true }
+);
+
+const TradeRequest = mongoose.model("TradeRequest", tradeRequestSchema);
+export default TradeRequest;import mongoose from "mongoose";
+
+const skillSchema = new mongoose.Schema(
+  {
+    title: { 
+        type: String, 
+        required: true 
+    },
+    category: {
+      type: String,
+      enum: ["music", "tech", "dance", "art", "language", "other"],
+      required: true,
+    },
+    description: { 
+        type: String, 
+        required: true 
+    },
+    skillOffered: { 
+        type: String, 
+        required: true 
+    }, 
+    skillWanted: { 
+        type: String, 
+        required: true 
+    },
+    owner: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User", 
+        required: true 
+    },
+  },
+  { timestamps: true }
+);
+
+const Skill = mongoose.model("Skill", skillSchema);
+export default Skill;
+import mongoose from "mongoose";
+
+
+const userSchema = new mongoose.Schema(
+  {
+    name: { 
+        type: String, 
+        required: true 
+    },
+    email: { 
+        type: String, 
+        required: true, 
+        unique: true 
+    },
+    password: { 
+        type: String, 
+        required: true 
+    },
+    profileImg: { 
+        type: String
+     }, // Cloudinary URL
+    address: { 
+        type: String 
+    },
+    about: { 
+        type: String 
+    },
+    skillsOffered: [
+        { 
+            type: String 
+        }
+    ], // or ObjectId ref if you want Skill model
+    skillsWanted: [
+        {
+            type: String 
+        }
+    ],
+    reviews: [
+        { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Review" 
+        }
+    ],
+    chats: [
+        { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Chat" 
+        }
+    ],
+  },
+  { timestamps: true }
+);
+
+
+const User = mongoose.model("User", userSchema);
+export default User;import mongoose from "mongoose";
+
+const messageSchema = new mongoose.Schema(
+  {
+    sender: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User" 
+    },
+    text: { 
+        type: String, 
+        required: true 
+    },
+    timestamp: { 
+        type: Date, 
+        default: Date.now 
+    },
+    systemMessage: { 
+        type: Boolean, 
+        default: false 
+    }, // for trade notifications
+  },
+  { _id: false }
+);
+
+const chatSchema = new mongoose.Schema(
+  {
+    participants: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User" 
+    }],
+    messages: [messageSchema],
+  },
+  { timestamps: true }
+);
+
+const Chat = mongoose.model("Chat", chatSchema);
+export default Chat;
+router.put("/complete/:id", protectRoute, markTradeComplete); app.use("/api/trades", tradeRoute);
+
