@@ -48,12 +48,17 @@ app.use("/api/reviews", reviewRoute);
 // socket.io init
 initSocket(server); // ✅ hook socket.io into the same server
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-  });
+// If that still throws an error in Express 5, try:
+// --- DEPLOYMENT SETTINGS ---
+if (process.env.NODE_ENV === "production") {
+    // Serve static files
+    app.use(express.static(path.join(__dirname, "frontend", "build"))); 
+
+    // Use the string pattern (.*) instead of the regex /.*/
+    app.get("(.*)", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+    });
 }
 
 const PORT = process.env.PORT || 5000;
