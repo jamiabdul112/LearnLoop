@@ -13,7 +13,7 @@ import { IoCallSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 // Change the socket init to include transport options if you face issues
-const socket = io(baseURL, { 
+const socket = io("https://learnloop-ybgi.onrender.com", { 
   withCredentials: true,
   transports: ['websocket', 'polling'] 
 });

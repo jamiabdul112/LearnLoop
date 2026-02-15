@@ -27,15 +27,15 @@ const app = express();
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://localhost:3001"],
+        origin: ["http://localhost:3000", "http://localhost:3001", "https://learnloop-ybgi.onrender.com"],
         credentials: true,
     })
 )
 
 const server = http.createServer(app); // ✅ wrap express in http server
 
-app.use(express.json({ limit: "5mb" })); 
-app.use(express.urlencoded({ extended: true, limit: "5mb" }));
+app.use(express.json({ limit: "50mb" })); 
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser()); 
 
 // routes
